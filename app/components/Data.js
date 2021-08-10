@@ -23,6 +23,12 @@ export const DataCommodities = [
     goods: [
       {
         unit: "kg",
+        name: "Shrimp",
+        price: "230,000đ",
+        image: require("../assets/images/meal.png"),
+      },
+      {
+        unit: "kg",
         name: "Tôm",
         price: "230,000đ",
         image: require("../assets/images/meal.png"),

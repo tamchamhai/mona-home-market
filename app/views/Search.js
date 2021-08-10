@@ -16,99 +16,152 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { DataTag, DataCommodities } from "../components/Data";
 
 const SearchScreen = ({ navigation }) => {
-  const [isTagActive, setIsTagActive] = React.useState(0);
   const [listTagSearch, setListTagSearch] = React.useState([]);
+  const [isTagActive, setIsTagActive] = React.useState(0);
+  const [listItemSearched, setListItemSearched] = React.useState([]);
+
+  const filterItems = () => {
+    const temp = [...DataCommodities[0].goods];
+    return temp.filter(
+      (el) =>
+        el.name
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/đ/g, "d")
+          .replace(/Đ/g, "D")
+          .toLowerCase()
+          .indexOf(
+            listTagSearch[isTagActive]
+              ?.normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .replace(/đ/g, "d")
+              .replace(/Đ/g, "D")
+              .toLowerCase()
+          ) !== -1
+    );
+  };
+  // console.log("temp", temp);
+
+  React.useEffect(() => {
+    console.log(filterItems());
+  }, [isTagActive]);
 
   const preSearch = () => {
     return (
-      <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
-        <Text style={styles.text}>Không có kết quả phù hợp!</Text>
-      </View>
+      <>
+        <View style={stylesSheet.headerStyleSheet}>
+          <SearchHeader
+            setListTagSearch={setListTagSearch}
+            listTagSearch={listTagSearch}
+            setIsTagActive={setIsTagActive}
+            filterItems={filterItems}
+            setListItemSearcheds={setListItemSearched}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
+          <Text style={styles.text}>Không có kết quả phù hợp!</Text>
+        </View>
+      </>
     );
   };
 
   const affterSearch = () => {
     return (
-      <ScrollView
-        style={{
-          marginTop: 5,
-          marginBottom: 55,
-          padding: 20,
-          backgroundColor: "#fff",
-        }}
-      >
-        <View style={styles.tagContainer}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text style={styles.text}>Mơi đây?</Text>
-            <TouchableOpacity>
-              <FontAwesome name="trash-o" size={18} />
-            </TouchableOpacity>
+      <>
+        <View style={stylesSheet.headerStyleSheet}>
+          <SearchHeader
+            setListTagSearch={setListTagSearch}
+            listTagSearch={listTagSearch}
+            setIsTagActive={setIsTagActive}
+            filterItems={filterItems}
+            setListItemSearched={setListItemSearched}
+          />
+        </View>
+        <ScrollView
+          style={{
+            marginTop: 5,
+            marginBottom: 55,
+            padding: 20,
+            backgroundColor: "#fff",
+          }}
+        >
+          <View style={styles.tagContainer}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Text style={styles.text}>Mơi đây?</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setListTagSearch([]);
+                }}
+              >
+                <FontAwesome name="trash-o" size={18} />
+              </TouchableOpacity>
+            </View>
+            {/*  */}
+            <View style={styles.tags}>
+              {listTagSearch.map((item, index) => {
+                return (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      setIsTagActive(index);
+                    }}
+                    style={[
+                      index === isTagActive
+                        ? styles.tagActive
+                        : styles.tagInActive,
+                      { marginBottom: 5 },
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        color: color.primary,
+                      }}
+                    >
+                      {item}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
           </View>
           {/*  */}
-          <View style={styles.tags}>
-            {DataTag.map((item, index) => {
+          <View style={styles.listItemContainer}>
+            {listItemSearched.map((item, index) => {
               return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    setIsTagActive(index);
-                  }}
-                  style={[
-                    index === isTagActive
-                      ? styles.tagActive
-                      : styles.tagInActive,
-                    { marginBottom: 5 },
-                  ]}
-                >
-                  <Text
-                    style={{
-                      color: color.primary,
-                    }}
-                  >
-                    {item}
-                  </Text>
+                <TouchableOpacity key={index} style={styles.itemContainer}>
+                  <Image source={item.image} style={styles.itemImage} />
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        marginBottom: 5,
+                        width: Dimensions.get("window").width - 120,
+                      }}
+                    >
+                      {item.name}
+                    </Text>
+                    <View style={{ flex: 1, flexDirection: "row" }}>
+                      <Text style={{ fontSize: 20 }}>{item.price}</Text>
+                      <Text style={{ fontSize: 16 }}>/{item.unit}</Text>
+                    </View>
+                  </View>
                 </TouchableOpacity>
               );
             })}
           </View>
-        </View>
-        {/*  */}
-        <View style={styles.listItemContainer}>
-          {DataCommodities[1].goods.map((item, index) => {
-            return (
-              <TouchableOpacity key={index} style={styles.itemContainer}>
-                <Image source={item.image} style={styles.itemImage} />
-                <View>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      marginBottom: 5,
-                      width: Dimensions.get("window").width - 120,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <View style={{ flex: 1, flexDirection: "row" }}>
-                    <Text style={{ fontSize: 20 }}>{item.price}</Text>
-                    <Text style={{ fontSize: 16 }}>/{item.unit}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </>
     );
   };
 
-  return <>{affterSearch()}</>;
+  return <>{listTagSearch.length !== 0 ? affterSearch() : preSearch()}</>;
 };
 
 const SearchNavigator = () => {
@@ -124,8 +177,10 @@ const SearchNavigator = () => {
           name="Search"
           component={SearchScreen}
           options={{
-            headerTitle: () => <SearchHeader />,
-            // headerShown: false,
+            headerTitle: () => (
+              <SearchHeader setListTagSearch={setListTagSearch} />
+            ),
+            headerShown: false,
           }}
         />
       </Stack.Navigator>
