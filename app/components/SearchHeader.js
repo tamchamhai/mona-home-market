@@ -10,12 +10,16 @@ import {
 } from "react-native";
 import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { set } from "react-native-reanimated";
 
 const SearchHeader = ({
   setListTagSearch,
   listTagSearch,
   setIsTagActive,
   filterItems,
+  isUpdate,
+  setIsUpdate,
+  navigation,
 }) => {
   const [width_ele, setWidth] = React.useState();
   const [height_ele, setHeight] = React.useState();
@@ -25,9 +29,10 @@ const SearchHeader = ({
   };
   const onSubmitEditing = (event) => {
     const temp = [...listTagSearch];
-    temp.unshift(event.nativeEvent.text);
+    event.nativeEvent.text !== "" && temp.unshift(event.nativeEvent.text);
     setListTagSearch(temp);
     setIsTagActive(0);
+    setIsUpdate(!isUpdate);
   };
 
   const find_dimesions = (layout) => {
@@ -67,7 +72,11 @@ const SearchHeader = ({
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
       />
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("FilterScreen");
+        }}
+      >
         <Text>
           <Entypo name="sound-mix" size={15} style={styles.button} />
         </Text>

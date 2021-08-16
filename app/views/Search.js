@@ -13,11 +13,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SearchHeader from "../components/SearchHeader";
 import { color, stylesSheet } from "../components/Styles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { DataTag, DataCommodities } from "../components/Data";
+import { ProductTag, CatagoriesTag, DataCommodities } from "../components/Data";
+import FilterScreen from "./FilterScreen";
 
 const SearchScreen = ({ navigation }) => {
   const [listTagSearch, setListTagSearch] = React.useState([]);
-  const [isTagActive, setIsTagActive] = React.useState(0);
+  const [isTagActive, setIsTagActive] = React.useState();
+  const [isUpdate, setIsUpdate] = React.useState(false);
   const [listItemSearched, setListItemSearched] = React.useState([]);
 
   const filterItems = () => {
@@ -40,11 +42,10 @@ const SearchScreen = ({ navigation }) => {
           ) !== -1
     );
   };
-  // console.log("temp", temp);
 
   React.useEffect(() => {
-    console.log(filterItems());
-  }, [isTagActive]);
+    setListItemSearched(filterItems());
+  }, [isUpdate, isTagActive]);
 
   const preSearch = () => {
     return (
@@ -55,7 +56,10 @@ const SearchScreen = ({ navigation }) => {
             listTagSearch={listTagSearch}
             setIsTagActive={setIsTagActive}
             filterItems={filterItems}
+            isUpdate={isUpdate}
+            setIsUpdate={setIsUpdate}
             setListItemSearcheds={setListItemSearched}
+            navigation={navigation}
           />
         </View>
         <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
@@ -74,7 +78,10 @@ const SearchScreen = ({ navigation }) => {
             listTagSearch={listTagSearch}
             setIsTagActive={setIsTagActive}
             filterItems={filterItems}
+            isUpdate={isUpdate}
+            setIsUpdate={setIsUpdate}
             setListItemSearched={setListItemSearched}
+            navigation={navigation}
           />
         </View>
         <ScrollView
@@ -169,8 +176,10 @@ const SearchNavigator = () => {
   return (
     <>
       <Stack.Navigator
+        initialRouteName="Search"
         screenOptions={({ navigation, route }) => ({
           headerStyle: stylesSheet.headerStyleSheet,
+          headerShown: false,
         })}
       >
         <Stack.Screen
@@ -180,9 +189,9 @@ const SearchNavigator = () => {
             headerTitle: () => (
               <SearchHeader setListTagSearch={setListTagSearch} />
             ),
-            headerShown: false,
           }}
         />
+        <Stack.Screen name="FilterScreen" component={FilterScreen} />
       </Stack.Navigator>
     </>
   );
@@ -196,6 +205,7 @@ const styles = StyleSheet.create({
     borderColor: color.primary,
     padding: 5,
     marginRight: 5,
+    marginBottom: 5,
   },
   tagInActive: {
     borderRadius: 15,
@@ -204,6 +214,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
     padding: 5,
     marginRight: 5,
+    marginBottom: 5,
   },
   tags: {
     flex: 4,
@@ -212,6 +223,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     marginTop: 10,
+  },
+  categoriesTags: {
+    marginRight: 5,
+    borderWidth: 1,
+    borderColor: color.primary,
+    padding: 10,
+    borderRadius: 20,
+    marginBottom: 5,
   },
   itemContainer: {
     flex: 1,
