@@ -16,6 +16,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import CustomTabBarContent from "./CustomTabBarContent";
 import CartNavigator from "../views/Cart";
+import DetailScreen from "../views/DetailScreen";
 
 const AppNavigator = () => {
   const Tab = createBottomTabNavigator();
@@ -113,7 +114,20 @@ const AppNavigator = () => {
             headerShown: false,
           }}
         />
-        <Tab.Screen name="Contact" component={ButtonDrawerMenu} />
+        <Tab.Screen
+          name="Contact"
+          component={ButtonDrawerMenu}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="DetailScreen"
+          component={DetailScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
