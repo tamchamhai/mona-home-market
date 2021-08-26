@@ -17,13 +17,14 @@ import Entypo from "react-native-vector-icons/Entypo";
 import CustomTabBarContent from "./CustomTabBarContent";
 import CartNavigator from "../views/Cart";
 import DetailScreen from "../views/DetailScreen";
+import CatagoriesScreen from "../views/CatagoriesScreen";
 
 const AppNavigator = () => {
   const Tab = createBottomTabNavigator();
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="CartNavigator"
+        initialRouteName="HomeNavigator"
         tabBar={(props) => <CustomTabBarContent {...props} />}
         screenOptions={({ route }) => ({
           tabBarActiveTintColor: "#fff",
@@ -124,6 +125,13 @@ const AppNavigator = () => {
         <Tab.Screen
           name="DetailScreen"
           component={DetailScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="CatagoriesScreen"
+          component={CatagoriesScreen}
           options={{
             headerShown: false,
           }}

@@ -1,34 +1,8 @@
+import { DataCommodities } from "../../components/Data";
+
 const initialState = {
-  product: [
-    {
-      unit: "kg",
-      name: "Shrimp",
-      price: 230000,
-      image: require("../../assets/images/meal.png"),
-      quatity: 1,
-    },
-    {
-      unit: "kg",
-      name: "Tôm",
-      price: 230000,
-      image: require("../../assets/images/meal.png"),
-      quatity: 1,
-    },
-    {
-      unit: "kg",
-      name: "Sườn non heo tươi C.P khay 300g",
-      price: 130000,
-      image: require("../../assets/images/meal.png"),
-      quatity: 1,
-    },
-    {
-      unit: "kg",
-      name: "Thịt heo xay G khay 300g",
-      price: 330000,
-      image: require("../../assets/images/meal.png"),
-      quatity: 1,
-    },
-  ],
+  product: DataCommodities[1].goods,
+  releaseProduct: DataCommodities[0].goods,
 };
 
 const cartReducer = (state = initialState, action) => {

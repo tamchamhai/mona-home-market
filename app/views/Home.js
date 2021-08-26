@@ -87,7 +87,15 @@ const HomeScreen = ({ navigation }) => {
             <View key={index}>
               <View style={styles.commoditiesHeader}>
                 <Text style={styles.commoditiesTitle}>{item.title}</Text>
-                <TouchableOpacity style={styles.commoditiesShowMore}>
+                <TouchableOpacity
+                  style={styles.commoditiesShowMore}
+                  onPress={() => {
+                    navigation.navigate({
+                      name: "CatagoriesScreen",
+                      params: { screen: "HomeNavigator", item: item },
+                    });
+                  }}
+                >
                   <Text style={{ paddingRight: 5, color: "#fff" }}>
                     Xem tất cả{"    "}
                     <FontAwesome name="angle-right" size={20} color="#fff" />
@@ -101,7 +109,16 @@ const HomeScreen = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
-                  <TouchableOpacity style={styles.listProductItem} key={index}>
+                  <TouchableOpacity
+                    style={styles.listProductItem}
+                    key={index}
+                    onPress={() => {
+                      navigation.navigate({
+                        name: "DetailScreen",
+                        params: { screen: "HomeNavigator", item: item },
+                      });
+                    }}
+                  >
                     <Image source={item.image} style={styles.productImage} />
                     <Text
                       style={styles.productName}
