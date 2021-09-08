@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
+  SafeAreaView,
 } from "react-native";
 import { SliderBox } from "react-native-image-slider-box";
 import ButtonDrawerMenu, { ButtonDrawerPhone } from "../components/Button";
@@ -25,6 +26,8 @@ import {
 } from "../components/Data";
 import Swiper from "react-native-swiper";
 import { color } from "../components/Styles";
+import IntroScreen from "./Intro";
+import ContactScreen from "./Contact";
 
 const HomeScreen = ({ navigation }) => {
   const renderListInfomation = () =>
@@ -62,24 +65,26 @@ const HomeScreen = ({ navigation }) => {
         />
       </View>
       {/*  */}
-      <FlatList
-        horizontal
-        keyExtractor={(_, index) => index.toString()}
-        style={styles.slidebar}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-        data={DataSlideBar}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.slidebarItem}>
-            <MaterialCommunityIcons
-              name={item.iconName}
-              size={40}
-              color={item.color}
-            />
-            <Text style={styles.slidebarItemTitle}>{item.title}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      <SafeAreaView style={{ flex: 1 }}>
+        <FlatList
+          horizontal
+          keyExtractor={(_, index) => index.toString()}
+          style={styles.slidebar}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          data={DataSlideBar}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.slidebarItem}>
+              <MaterialCommunityIcons
+                name={item.iconName}
+                size={40}
+                color={item.color}
+              />
+              <Text style={styles.slidebarItemTitle}>{item.title}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      </SafeAreaView>
       {/*  */}
       <View style={styles.commodities}>
         {DataCommodities.map((item, index) => {
@@ -102,36 +107,38 @@ const HomeScreen = ({ navigation }) => {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <FlatList
-                data={item.goods}
-                horizontal
-                keyExtractor={(_, index) => index.toString()}
-                showsVerticalScrollIndicator={false}
-                showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.listProductItem}
-                    key={index}
-                    onPress={() => {
-                      navigation.navigate({
-                        name: "DetailScreen",
-                        params: { screen: "HomeNavigator", item: item },
-                      });
-                    }}
-                  >
-                    <Image source={item.image} style={styles.productImage} />
-                    <Text
-                      style={styles.productName}
-                      numberOfLines={2}
-                      ellipsizeMode="tail"
+              <SafeAreaView style={{ flex: 1 }}>
+                <FlatList
+                  data={item.goods}
+                  horizontal
+                  keyExtractor={(_, index) => index.toString()}
+                  showsVerticalScrollIndicator={false}
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.listProductItem}
+                      key={index}
+                      onPress={() => {
+                        navigation.navigate({
+                          name: "DetailScreen",
+                          params: { screen: "HomeNavigator", item: item },
+                        });
+                      }}
                     >
-                      {item.name}
-                    </Text>
-                    <Text style={styles.productPrice}>{item.price}</Text>
-                    <Text style={styles.productUnit}>{item.unit}</Text>
-                  </TouchableOpacity>
-                )}
-              />
+                      <Image source={item.image} style={styles.productImage} />
+                      <Text
+                        style={styles.productName}
+                        numberOfLines={2}
+                        ellipsizeMode="tail"
+                      >
+                        {item.name}
+                      </Text>
+                      <Text style={styles.productPrice}>{item.price}</Text>
+                      <Text style={styles.productUnit}>{item.unit}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </SafeAreaView>
             </View>
           );
         })}
@@ -167,7 +174,7 @@ const HomeNavigator = (props) => {
     <>
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
-        initialRouteName="Home"
+        initialRouteName="HomeScreen"
         screenOptions={({ navigation, route }) => ({
           headerLeft: () => <ButtonDrawerMenu navigation={navigation} />,
           headerRight: () => <ButtonDrawerPhone />,
@@ -175,11 +182,29 @@ const HomeNavigator = (props) => {
         })}
       >
         <Drawer.Screen
-          name="Home"
+          name="HomeScreen"
           component={HomeScreen}
           options={{
             drawerLabel: "Trang chủ",
             headerStyle: stylesSheet.headerStyleSheet,
+          }}
+        />
+        <Drawer.Screen
+          name="IntroScreen"
+          component={IntroScreen}
+          options={{
+            drawerLabel: "Giới Thiệu",
+            headerStyle: stylesSheet.headerStyleSheet,
+            headerShown: false,
+          }}
+        />
+        <Drawer.Screen
+          name="ContactScreen"
+          component={ContactScreen}
+          options={{
+            drawerLabel: "Giới Thiệu",
+            headerStyle: stylesSheet.headerStyleSheet,
+            headerShown: false,
           }}
         />
       </Drawer.Navigator>

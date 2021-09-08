@@ -2,6 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Linking } from "react-native";
 
 const ButtonDrawerMenu = ({ navigation }) => {
   return (
@@ -9,7 +10,6 @@ const ButtonDrawerMenu = ({ navigation }) => {
       onPress={() => {
         navigation.toggleDrawer();
       }}
-      s
       style={{
         marginLeft: 10,
         flex: 1,
@@ -28,10 +28,12 @@ const ButtonDrawerMenu = ({ navigation }) => {
 export default ButtonDrawerMenu;
 
 export const ButtonDrawerPhone = () => {
+  const phoneNumber = "0802020202";
   return (
     <TouchableOpacity
       onPress={() => {
         console.log("Onpress the phone");
+        Linking.openURL(`tel:${phoneNumber}`);
       }}
       style={{
         marginRight: 10,

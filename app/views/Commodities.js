@@ -14,8 +14,10 @@ import ButtonDrawerMenu from "../components/Button";
 import CustomDrawerContent from "../navigator/CustomDrawerContent";
 import { stylesSheet } from "../components/Styles";
 import { DataCommodities, HeaderLogo } from "../components/Data";
+import { useSelector } from "react-redux";
 
-const CommoditiesScreen = () => {
+const CommoditiesScreen = ({ route, navigation }) => {
+  const { category } = useSelector((state) => state.categories);
   return (
     <View
       style={styles.container}
@@ -23,12 +25,20 @@ const CommoditiesScreen = () => {
       showsHorizontalScrollIndicator={false}
     >
       <FlatList
-        data={DataCommodities}
+        data={category}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.itemContainer}>
+          <TouchableOpacity
+            style={styles.itemContainer}
+            onPress={() => {
+              navigation.navigate({
+                name: "CatagoriesScreen",
+                params: { screen: "CommoditiesNavigator", item: item },
+              });
+            }}
+          >
             <Image
               source={item.imageCommodities}
               style={styles.imageCommodities}

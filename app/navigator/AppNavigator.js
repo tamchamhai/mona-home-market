@@ -15,7 +15,12 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import CustomTabBarContent from "./CustomTabBarContent";
-import CartNavigator from "../views/Cart";
+import CartNavigator, {
+  CartScreen,
+  DiliveryScreen,
+  OrderScreen,
+  PaymentScreen,
+} from "../views/Cart";
 import DetailScreen from "../views/DetailScreen";
 import CatagoriesScreen from "../views/CatagoriesScreen";
 
@@ -24,7 +29,7 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="HomeNavigator"
+        initialRouteName="IntroScreen"
         tabBar={(props) => <CustomTabBarContent {...props} />}
         screenOptions={({ route }) => ({
           tabBarActiveTintColor: "#fff",
@@ -116,8 +121,15 @@ const AppNavigator = () => {
           }}
         />
         <Tab.Screen
-          name="Contact"
-          component={ButtonDrawerMenu}
+          name="ContactScreen"
+          component={ContactScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="IntroScreen"
+          component={IntroScreen}
           options={{
             headerShown: false,
           }}
@@ -135,6 +147,26 @@ const AppNavigator = () => {
           options={{
             headerShown: false,
           }}
+        />
+        <Tab.Screen
+          name="CartScreen"
+          component={CartScreen}
+          options={{ headerLeft: false }}
+        />
+        <Tab.Screen
+          name="DiliveryScreen"
+          component={DiliveryScreen}
+          options={{ headerLeft: false }}
+        />
+        <Tab.Screen
+          name="PaymentScreen"
+          component={PaymentScreen}
+          options={{ headerLeft: false }}
+        />
+        <Tab.Screen
+          name="OrderScreen"
+          component={OrderScreen}
+          options={{ headerLeft: false }}
         />
       </Tab.Navigator>
     </NavigationContainer>

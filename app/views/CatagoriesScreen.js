@@ -9,16 +9,63 @@ import {
   Image,
   ImageBackground,
   Animated,
+  Pressable,
+  Modal,
 } from "react-native";
 import { useSelector } from "react-redux";
 import { color, stylesSheet } from "../components/Styles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const CatagoriesScreen = ({ route, navigation }) => {
   const { category } = useSelector((state) => state.categories);
+  const [visibleModal, setVisibleModal] = React.useState(false);
   const scrollRef = React.useRef(null);
   return (
     <>
+      <View style={{}}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={visibleModal}
+          onRequestClose={() => {
+            setVisibleModal(!visibleModal);
+          }}
+        >
+          <View style={styles.modal}>
+            <TouchableOpacity
+              onPress={() => {
+                setVisibleModal(!visibleModal);
+              }}
+            >
+              <Text style={styles.modalText}>Sắp xếp từ A đến Z</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setVisibleModal(!visibleModal);
+              }}
+            >
+              <Text style={styles.modalText}>Sắp xếp từ Z đến A</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setVisibleModal(!visibleModal);
+              }}
+            >
+              <Text style={styles.modalText}>Sắp xếp giá giảm dần</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setVisibleModal(!visibleModal);
+              }}
+            >
+              <Text style={styles.modalText}>Sắp xếp giá tăng dần</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        {/*  */}
+      </View>
+      {/*  */}
       <View
         style={[
           stylesSheet.headerStyleSheet,
@@ -49,7 +96,21 @@ const CatagoriesScreen = ({ route, navigation }) => {
           </Text>
         </View>
         {/*  */}
-        <View style={{ width: "20%" }}></View>
+        <View style={{ width: "20%", justifyContent: "flex-end" }}>
+          <Pressable
+            onPress={() => {
+              setVisibleModal(!visibleModal);
+            }}
+          >
+            <Text style={{ textAlign: "right" }}>
+              <MaterialCommunityIcons
+                name="sort-variant"
+                size={20}
+                color="#fff"
+              />
+            </Text>
+          </Pressable>
+        </View>
       </View>
       {/*  */}
       <View style={{ width: "100%", height: 130 }}>
@@ -174,5 +235,28 @@ const styles = StyleSheet.create({
     paddingRight: 10,
   },
   itemName: { paddingLeft: 10, paddingRight: 10, height: 40 },
+  modal: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    position: "absolute",
+    top: 300,
+    right: "25%",
+    // transform: [{ translateX: "90%" }],
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 2,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 10,
+    padding: 20,
+  },
+  modalText: {
+    color: color.primary,
+    fontSize: 18,
+    marginBottom: 10,
+  },
 });
 export default CatagoriesScreen;

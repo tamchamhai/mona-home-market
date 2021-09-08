@@ -11,6 +11,7 @@ export const stylesSheet = StyleSheet.create({
 export const color = {
   primary: "#2c994b",
   secondary: "#fff",
+  light: "#2c996a",
   iconActive: "#f3bd5b",
   iconInactive: "#fff",
 };

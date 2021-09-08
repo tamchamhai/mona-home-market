@@ -30,7 +30,7 @@ import {
 } from "../store/actions/cartAction";
 import Animated from "react-native-reanimated";
 
-const CartScreen = ({ route, navigation }) => {
+export const CartScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const cartList = useSelector((state) => state.cart);
 
@@ -338,7 +338,7 @@ const CartScreen = ({ route, navigation }) => {
   return <>{cartList.product.length === 0 ? CartEmpty() : Cart()}</>;
 };
 
-const DiliveryScreen = ({ route, navigation }) => {
+export const DiliveryScreen = ({ route, navigation }) => {
   const [btnActive, setBtnActive] = React.useState("left");
   const [date, setDate] = React.useState(new Date(1598051730000));
   const [mode, setMode] = React.useState("date");
@@ -686,7 +686,7 @@ const DiliveryScreen = ({ route, navigation }) => {
   );
 };
 
-const PaymentScreen = ({ route, navigation }) => {
+export const PaymentScreen = ({ route, navigation }) => {
   return (
     <>
       <ScrollView
@@ -717,7 +717,7 @@ const PaymentScreen = ({ route, navigation }) => {
   );
 };
 
-const OrderScreen = ({ route, navigation }) => {
+export const OrderScreen = ({ route, navigation }) => {
   return (
     <>
       <ScrollView
@@ -763,7 +763,7 @@ const CartNavigator = () => {
         component={CartScreen}
         options={{ headerLeft: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="DiliveryScreen"
         component={DiliveryScreen}
         options={{ headerLeft: false }}
@@ -777,7 +777,7 @@ const CartNavigator = () => {
         name="OrderScreen"
         component={OrderScreen}
         options={{ headerLeft: false }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };
