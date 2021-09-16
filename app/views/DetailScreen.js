@@ -98,7 +98,8 @@ const DetailScreen = ({ route, navigation }) => {
         showsHorizontalScrollIndicator={false}
         onScroll={Animated.event(
           [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: true }
+          { useNativeDriver: true },
+          { listener: (event) => console.log(event) }
         )}
         scrollEventThrottle={16}
       >
@@ -112,6 +113,7 @@ const DetailScreen = ({ route, navigation }) => {
             opacity: opacity,
           }}
         >
+          {console.log(scrollY)}
           <Image
             source={item.image}
             style={{

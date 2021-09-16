@@ -2274,3 +2274,5 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
 });
+
+export const FB_APP_ID = "250858150377927";
